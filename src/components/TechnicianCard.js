@@ -1,22 +1,24 @@
 // src/components/TechnicianCard.js
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { addFavorite, removeFavorite, getFavorites } from '../services/favoritesService';
+import { FaBolt, FaHammer, FaPaintBrush, FaStar, FaRegStar, FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
+import { GiWaterPump, GiSawBlade } from 'react-icons/gi';
+import '../styles/globalStyles.css'; // assuming you converted styles to CSS
 
-export default function TechnicianCard({ technician, onPress }) {
+export default function TechnicianCard({ technician, onClick }) {
   const jobIcons = {
-    Electrician: 'flash',
-    Plumber: 'water-pump',
-    Bricklayer: 'hammer',
-    Carpenter: 'saw-blade',
-    Painter: 'brush',
+    Electrician: <FaBolt color="#2196F3" />,
+    Plumber: <GiWaterPump color="#2196F3" />,
+    Bricklayer: <FaHammer color="#2196F3" />,
+    Carpenter: <GiSawBlade color="#2196F3" />,
+    Painter: <FaPaintBrush color="#2196F3" />,
   };
 
-  const jobIcon = jobIcons[technician.jobType] || 'account';
+  const jobIcon = jobIcons[technician.jobType] || <FaBolt color="#2196F3" />;
   const isFavorite = getFavorites().some((fav) => fav.id === technician.id);
 
-  const toggleFavorite = () => {
+  const toggleFavorite = (e) => {
+    e.stopPropagation(); // prevent triggering card click
     if (isFavorite) {
       removeFavorite(technician.id);
     } else {
@@ -25,41 +27,27 @@ export default function TechnicianCard({ technician, onPress }) {
   };
 
   return (
-    <TouchableOpacity style={styles.card} onPress={onPress}>
-      <View style={styles.row}>
-        <Icon name={jobIcon} size={24} color="#2196F3" style={styles.icon} />
-        <Text style={styles.name}>{technician.name}</Text>
-        <TouchableOpacity onPress={toggleFavorite}>
-          <Icon
-            name={isFavorite ? 'star' : 'star-outline'}
-            size={24}
-            color={isFavorite ? '#FFD700' : '#999'}
-            style={styles.icon}
-          />
-        </TouchableOpacity>
-      </View>
+    <div className="card" onClick={onClick} style={{ cursor: 'pointer' }}>
+      <div className="row">
+        <span className="icon">{jobIcon}</span>
+        <p className="name">{technician.name}</p>
+        <span className="icon" onClick={toggleFavorite} style={{ cursor: 'pointer' }}>
+          {isFavorite ? <FaStar color="#FFD700" /> : <FaRegStar color="#999" />}
+        </span>
+      </div>
 
-      <Text style={styles.detail}>{technician.jobType} - {technician.lga}</Text>
+      <p className="detail">{technician.jobType} - {technician.lga}</p>
 
-      <View style={styles.row}>
-        <Icon
-          name={technician.available ? 'check-circle' : 'close-circle'}
-          size={20}
-          color={technician.available ? '#4CAF50' : '#f44336'}
-          style={styles.icon}
-        />
-        <Text style={{ color: technician.available ? '#4CAF50' : '#f44336' }}>
+      <div className="row">
+        {technician.available ? (
+          <FaCheckCircle color="#4CAF50" className="icon" />
+        ) : (
+          <FaTimesCircle color="#f44336" className="icon" />
+        )}
+        <p style={{ color: technician.available ? '#4CAF50' : '#f44336' }}>
           {technician.available ? 'Available' : 'Unavailable'}
-        </Text>
-      </View>
-    </TouchableOpacity>
+        </p>
+      </div>
+    </div>
   );
 }
-
-const styles = StyleSheet.create({
-  card: { padding: 15, marginVertical: 10, borderWidth: 1, borderColor: '#ccc', borderRadius: 8, backgroundColor: '#fff' },
-  row: { flexDirection: 'row', alignItems: 'center', marginBottom: 5 },
-  icon: { marginLeft: 8 },
-  name: { fontSize: 18, fontWeight: 'bold', flex: 1 },
-  detail: { fontSize: 14, color: '#333' },
-});

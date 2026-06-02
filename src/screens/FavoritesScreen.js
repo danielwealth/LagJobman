@@ -1,31 +1,32 @@
 // src/screens/FavoritesScreen.js
 import React from 'react';
-import { View, Text, FlatList } from 'react-native';
+import { useNavigate } from 'react-router-dom';
 import { getFavorites } from '../services/favoritesService';
 import TechnicianCard from '../components/TechnicianCard';
-import { globalStyles } from '../styles/globalStyles';
+import '../styles/globalStyles.css'; // assuming you converted styles to CSS
 
-export default function FavoritesScreen({ navigation }) {
+export default function FavoritesScreen() {
+  const navigate = useNavigate();
   const favorites = getFavorites();
 
   return (
-    <View style={globalStyles.container}>
-      <Text style={globalStyles.title}>Favorite Technicians</Text>
+    <div className="container">
+      <h1 className="title">Favorite Technicians</h1>
 
       {favorites.length === 0 ? (
-        <Text>No favorites yet. Tap the star icon on a technician to add them.</Text>
+        <p>No favorites yet. Click the star icon on a technician to add them.</p>
       ) : (
-        <FlatList
-          data={favorites}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => (
-            <TechnicianCard
-              technician={item}
-              onPress={() => navigation.navigate('Profile', { technician: item })}
-            />
-          )}
-        />
+        <ul className="favorites-list">
+          {favorites.map((item) => (
+            <li key={item.id}>
+              <TechnicianCard
+                technician={item}
+                onClick={() => navigate('/profile', { state: { technician: item } })}
+              />
+            </li>
+          ))}
+        </ul>
       )}
-    </View>
+    </div>
   );
 }

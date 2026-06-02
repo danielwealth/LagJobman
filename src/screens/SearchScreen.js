@@ -1,14 +1,15 @@
 // src/screens/SearchScreen.js
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Picker, FlatList } from 'react-native';
+import { useNavigate } from 'react-router-dom';
 import TechnicianCard from '../components/TechnicianCard';
 import { searchTechnicians } from '../services/searchService';
-import { globalStyles } from '../styles/globalStyles';
+import '../styles/globalStyles.css'; // converted CSS styles
 
 const lagosLGAs = ['Ikeja', 'Surulere', 'Eti-Osa', 'Alimosho', 'Apapa'];
 const jobTypes = ['Electrician', 'Plumber', 'Bricklayer', 'Carpenter', 'Painter'];
 
-export default function SearchScreen({ navigation }) {
+export default function SearchScreen() {
+  const navigate = useNavigate();
   const [selectedJob, setSelectedJob] = useState(jobTypes[0]);
   const [selectedLga, setSelectedLga] = useState(lagosLGAs[0]);
 
@@ -16,38 +17,46 @@ export default function SearchScreen({ navigation }) {
   const filteredTechnicians = searchTechnicians(selectedJob, selectedLga);
 
   return (
-    <View style={globalStyles.container}>
-      <Text style={globalStyles.title}>Search Technicians</Text>
+    <div className="container">
+      <h1 className="title">Search Technicians</h1>
 
-      <Text style={globalStyles.label}>Job Type</Text>
-      <Picker selectedValue={selectedJob} onValueChange={(val) => setSelectedJob(val)}>
-        {jobTypes.map((job) => <Picker.Item key={job} label={job} value={job} />)}
-      </Picker>
+      <label className="label">Job Type</label>
+      <select
+        className="input"
+        value={selectedJob}
+        onChange={(e) => setSelectedJob(e.target.value)}
+      >
+        {jobTypes.map((job) => (
+          <option key={job} value={job}>{job}</option>
+        ))}
+      </select>
 
-      <Text style={globalStyles.label}>Lagos LGA</Text>
-      <Picker selectedValue={selectedLga} onValueChange={(val) => setSelectedLga(val)}>
-        {lagosLGAs.map((area) => <Picker.Item key={area} label={area} value={area} />)}
-      </Picker>
+      <label className="label">Lagos LGA</label>
+      <select
+        className="input"
+        value={selectedLga}
+        onChange={(e) => setSelectedLga(e.target.value)}
+      >
+        {lagosLGAs.map((area) => (
+          <option key={area} value={area}>{area}</option>
+        ))}
+      </select>
 
-      <Text style={globalStyles.label}>Available Technicians</Text>
+      <h2 className="label">Available Technicians</h2>
       {filteredTechnicians.length === 0 ? (
-        <Text>No available technicians found.</Text>
+        <p>No available technicians found.</p>
       ) : (
-        <FlatList
-          data={filteredTechnicians}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => (
-            <TechnicianCard
-              technician={item}
-              onPress={() => navigation.navigate('Profile', { technician: item })}
-            />
-          )}
-        />
+        <ul className="technician-list">
+          {filteredTechnicians.map((item) => (
+            <li key={item.id}>
+              <TechnicianCard
+                technician={item}
+                onClick={() => navigate('/profile', { state: { technician: item } })}
+              />
+            </li>
+          ))}
+        </ul>
       )}
-    </View>
+    </div>
   );
 }
-
-const styles = StyleSheet.create({
-  label: { fontSize: 16, marginTop: 10 },
-});

@@ -1,0 +1,72 @@
+/* src/styles/globalStyles.css */
+
+:root {
+  --primary: #4CAF50;   /* Green for availability */
+  --secondary: #2196F3; /* Blue for buttons */
+  --danger: #f44336;    /* Red for unavailable */
+  --text: #333333;
+  --background: #f9f9f9;
+  --border: #cccccc;
+}
+
+.container {
+  background-color: var(--background);
+  padding: 20px;
+  min-height: 100vh;
+}
+
+.title {
+  font-size: 22px;
+  font-weight: bold;
+  color: var(--text);
+  margin-bottom: 20px;
+}
+
+.label {
+  font-size: 16px;
+  color: var(--text);
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
+.input {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 10px;
+  margin-bottom: 15px;
+  background-color: #fff;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.button {
+  background-color: var(--secondary);
+  padding: 12px;
+  border-radius: 6px;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  margin: 10px 0;
+  width: 100%;
+  text-align: center;
+}
+
+.button:hover {
+  background-color: #1976d2; /* darker blue on hover */
+}
+
+.card {
+  padding: 15px;
+  margin: 10px 0;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background-color: #fff;
+}
+
+.cardTitle {
+  font-size: 18px;
+  font-weight: bold;
+  color: var(--text);
+}

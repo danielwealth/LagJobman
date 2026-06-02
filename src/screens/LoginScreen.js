@@ -1,64 +1,61 @@
 // src/screens/LoginScreen.js
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
+import { useNavigate } from 'react-router-dom';
 import { loginUser } from '../services/authService';
-import { globalStyles } from '../styles/globalStyles';
+import '../styles/globalStyles.css'; // assuming you converted styles to CSS
 
-export default function LoginScreen({ navigation }) {
+export default function LoginScreen() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleLogin = async () => {
     if (!email || !password) {
-      Alert.alert('Error', 'Please enter both email and password.');
+      window.alert('Error: Please enter both email and password.');
       return;
     }
 
     try {
       const result = await loginUser(email, password);
       if (result.success) {
-        Alert.alert('Success', 'Logged in successfully!');
-        navigation.navigate('Home'); // Redirect to Home after login
+        window.alert('Success: Logged in successfully!');
+        navigate('/home'); // Redirect to Home after login
       } else {
-        Alert.alert('Error', 'Login failed. Try again.');
+        window.alert('Error: Login failed. Try again.');
       }
     } catch (error) {
-      Alert.alert('Error', 'Something went wrong.');
+      window.alert('Error: Something went wrong.');
       console.error(error);
     }
   };
 
   return (
-    <View style={globalStyles.container}>
-      <Text style={globalStyles.title}>Technician Login</Text>
+    <div className="container">
+      <h1 className="title">Technician Login</h1>
 
-      <TextInput
-        style={globalStyles.input}
+      <input
+        className="input"
+        type="email"
         placeholder="Email"
         value={email}
-        onChangeText={setEmail}
-        keyboardType="email-address"
-        autoCapitalize="none"
+        onChange={(e) => setEmail(e.target.value)}
       />
 
-      <TextInput
-        style={globalStyles.input}
+      <input
+        className="input"
+        type="password"
         placeholder="Password"
         value={password}
-        onChangeText={setPassword}
-        secureTextEntry
+        onChange={(e) => setPassword(e.target.value)}
       />
 
-      <TouchableOpacity style={globalStyles.button} onPress={handleLogin}>
-        <Text style={globalStyles.buttonText}>Login</Text>
-      </TouchableOpacity>
+      <button className="button" onClick={handleLogin}>
+        Login
+      </button>
 
-      <TouchableOpacity
-        style={globalStyles.button}
-        onPress={() => navigation.navigate('Register')}
-      >
-        <Text style={globalStyles.buttonText}>Register Instead</Text>
-      </TouchableOpacity>
-    </View>
+      <button className="button" onClick={() => navigate('/register')}>
+        Register Instead
+      </button>
+    </div>
   );
 }

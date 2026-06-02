@@ -1,54 +1,44 @@
 // src/screens/HomeScreen.js
 import React from 'react';
-import { View, Text, TouchableOpacity, Alert } from 'react-native';
-import { globalStyles } from '../styles/globalStyles';
+import { useNavigate } from 'react-router-dom';
 import { logoutUser } from '../services/authService';
+import '../styles/globalStyles.css'; // assuming you converted styles to CSS
 
-export default function HomeScreen({ navigation }) {
+export default function HomeScreen() {
+  const navigate = useNavigate();
+
   const handleLogout = async () => {
     try {
       const result = await logoutUser();
       if (result.success) {
-        Alert.alert('Logged out', 'You have been signed out.');
-        navigation.navigate('Login'); // Redirect to Login screen
+        window.alert('Logged out. You have been signed out.');
+        navigate('/login'); // Redirect to Login screen
       }
     } catch (error) {
-      Alert.alert('Error', 'Logout failed.');
+      window.alert('Error: Logout failed.');
       console.error(error);
     }
   };
 
   return (
-    <View style={globalStyles.container}>
-      <Text style={globalStyles.title}>Technician Marketplace</Text>
+    <div className="container">
+      <h1 className="title">Technician Marketplace</h1>
 
-      <TouchableOpacity
-        style={globalStyles.button}
-        onPress={() => navigation.navigate('Register')}
-      >
-        <Text style={globalStyles.buttonText}>Register</Text>
-      </TouchableOpacity>
+      <button className="button" onClick={() => navigate('/register')}>
+        Register
+      </button>
 
-      <TouchableOpacity
-        style={globalStyles.button}
-        onPress={() => navigation.navigate('Search')}
-      >
-        <Text style={globalStyles.buttonText}>Search Technicians</Text>
-      </TouchableOpacity>
+      <button className="button" onClick={() => navigate('/search')}>
+        Search Technicians
+      </button>
 
-      <TouchableOpacity
-        style={globalStyles.button}
-        onPress={() => navigation.navigate('Profile')}
-      >
-        <Text style={globalStyles.buttonText}>View Profile</Text>
-      </TouchableOpacity>
+      <button className="button" onClick={() => navigate('/profile')}>
+        View Profile
+      </button>
 
-      <TouchableOpacity
-        style={globalStyles.button}
-        onPress={handleLogout}
-      >
-        <Text style={globalStyles.buttonText}>Logout</Text>
-      </TouchableOpacity>
-    </View>
+      <button className="button" onClick={handleLogout}>
+        Logout
+      </button>
+    </div>
   );
 }

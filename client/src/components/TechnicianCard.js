@@ -1,7 +1,5 @@
 // src/components/TechnicianCard.js
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { addFavorite, removeFavorite, getFavorites } from '../services/favoritesService';
 
 export default function TechnicianCard({ technician, onPress }) {

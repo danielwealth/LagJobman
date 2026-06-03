@@ -1,5 +1,4 @@
 // src/services/authService.js
-import * as SecureStore from 'expo-secure-store';
 
 export async function registerUser(userData) {
   // Example: send to backend or Firebase

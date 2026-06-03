@@ -1,6 +1,5 @@
 // src/screens/LoginScreen.js
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { loginUser } from '../services/authService';
 import { globalStyles } from '../styles/globalStyles';
 

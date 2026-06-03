@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from 'react';
-import { View, Text, TouchableOpacity, Alert, Image, Animated } from 'react-native';
 import { globalStyles } from '../styles/globalStyles';
 import { logoutUser } from '../services/authService';
 import logo from '../assets/logo2.png'; // ✅ logo path

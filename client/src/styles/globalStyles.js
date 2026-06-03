@@ -1,5 +1,4 @@
 // src/styles/globalStyles.js
-import { StyleSheet } from 'react-native';
 
 const colors = {
   primary: '#4CAF50',   // Green for availability

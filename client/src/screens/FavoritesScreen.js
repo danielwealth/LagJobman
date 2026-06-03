@@ -1,6 +1,5 @@
 // src/screens/FavoritesScreen.js
 import React from 'react';
-import { View, Text, FlatList } from 'react-native';
 import { getFavorites } from '../services/favoritesService';
 import TechnicianCard from '../components/TechnicianCard';
 import { globalStyles } from '../styles/globalStyles';

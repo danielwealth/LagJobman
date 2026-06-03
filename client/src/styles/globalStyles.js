@@ -9,57 +9,54 @@ const colors = {
   border: '#cccccc',
 };
 
-const globalStyles = StyleSheet.create({
+const globalStyles = {
   container: {
-    flex: 1,
     backgroundColor: colors.background,
-    padding: 20,
+    padding: '20px',
+    minHeight: '100vh',
   },
   title: {
-    fontSize: 22,
+    fontSize: '22px',
     fontWeight: 'bold',
     color: colors.text,
-    marginBottom: 20,
+    marginBottom: '20px',
   },
   label: {
-    fontSize: 16,
+    fontSize: '16px',
     color: colors.text,
-    marginTop: 10,
-    marginBottom: 5,
+    marginTop: '10px',
+    marginBottom: '5px',
   },
   input: {
-    borderWidth: 1,
-    borderColor: colors.border,
-    borderRadius: 6,
-    padding: 10,
-    marginBottom: 15,
+    border: `1px solid ${colors.border}`,
+    borderRadius: '6px',
+    padding: '10px',
+    marginBottom: '15px',
     backgroundColor: '#fff',
   },
   button: {
     backgroundColor: colors.secondary,
-    padding: 12,
-    borderRadius: 6,
-    alignItems: 'center',
-    marginVertical: 10,
-  },
-  buttonText: {
+    padding: '12px',
+    borderRadius: '6px',
     color: '#fff',
-    fontSize: 16,
+    fontSize: '16px',
     fontWeight: '600',
+    margin: '10px 0',
+    cursor: 'pointer',
+    textAlign: 'center',
   },
   card: {
-    padding: 15,
-    marginVertical: 10,
-    borderWidth: 1,
-    borderColor: colors.border,
-    borderRadius: 8,
+    padding: '15px',
+    margin: '10px 0',
+    border: `1px solid ${colors.border}`,
+    borderRadius: '8px',
     backgroundColor: '#fff',
   },
   cardTitle: {
-    fontSize: 18,
+    fontSize: '18px',
     fontWeight: 'bold',
     color: colors.text,
   },
-});
+};
 
 export { colors, globalStyles };

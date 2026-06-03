@@ -1,6 +1,5 @@
 // src/screens/RegisterScreen.js
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import AvailabilityToggle from '../components/AvailabilityToggle';
 import ImageUploader from '../components/ImageUploader';

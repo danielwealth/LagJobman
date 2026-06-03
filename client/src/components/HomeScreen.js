@@ -1,6 +1,5 @@
 // src/screens/HomeScreen.js
 import React from 'react';
-import { View, Text, TouchableOpacity, Alert } from 'react-native';
 import { globalStyles } from '../styles/globalStyles';
 import { logoutUser } from '../services/authService';
 

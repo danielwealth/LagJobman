@@ -2,26 +2,28 @@
 import React from 'react';
 import { addFavorite, removeFavorite, getFavorites } from '../services/favoritesService';
 
+// For icons, you can use a library like react-icons (https://react-icons.github.io/react-icons/)
+import { FaBolt, FaWater, FaHammer, FaSaw, FaPaintBrush, FaTh, FaSolarPanel, FaCompass, FaBroom, FaBook, FaWindowMaximize, FaStar, FaRegStar, FaCheckCircle, FaTimesCircle, FaUser } from 'react-icons/fa';
+
 export default function TechnicianCard({ technician, onPress }) {
   const jobIcons = {
-    Electrician: 'flash',
-    Plumber: 'water-pump',
-    Bricklayer: 'hammer',
-    Carpenter: 'saw-blade',
-    Painter: 'brush',
-    Tiler: 'tile grid',
-    SoloarInstaller: 'solar panel',
-    Engineer: 'compass',
-    Cleaner: 'broom',
-    Labourer: 'hammer',
-    BrickMoulder: 'brick press',
-    HeaterReparer:'heater',
-    HomeLessonTeacher: 'book',
-    AluminiumMan: 'aluminium window frame'
-
+    Electrician: <FaBolt />,
+    Plumber: <FaWater />,
+    Bricklayer: <FaHammer />,
+    Carpenter: <FaSaw />,
+    Painter: <FaPaintBrush />,
+    Tiler: <FaTh />,
+    SoloarInstaller: <FaSolarPanel />,
+    Engineer: <FaCompass />,
+    Cleaner: <FaBroom />,
+    Labourer: <FaHammer />,
+    BrickMoulder: <FaHammer />,
+    HeaterReparer: <FaTimesCircle />,
+    HomeLessonTeacher: <FaBook />,
+    AluminiumMan: <FaWindowMaximize />,
   };
 
-  const jobIcon = jobIcons[technician.jobType] || 'account';
+  const jobIcon = jobIcons[technician.jobType] || <FaUser />;
   const isFavorite = getFavorites().some((fav) => fav.id === technician.id);
 
   const toggleFavorite = () => {
@@ -33,41 +35,61 @@ export default function TechnicianCard({ technician, onPress }) {
   };
 
   return (
-    <TouchableOpacity style={styles.card} onPress={onPress}>
-      <View style={styles.row}>
-        <Icon name={jobIcon} size={24} color="#2196F3" style={styles.icon} />
-        <Text style={styles.name}>{technician.name}</Text>
-        <TouchableOpacity onPress={toggleFavorite}>
-          <Icon
-            name={isFavorite ? 'star' : 'star-outline'}
-            size={24}
-            color={isFavorite ? '#FFD700' : '#999'}
-            style={styles.icon}
-          />
-        </TouchableOpacity>
-      </View>
+    <div style={styles.card} onClick={onPress}>
+      <div style={styles.row}>
+        <span style={styles.icon}>{jobIcon}</span>
+        <span style={styles.name}>{technician.name}</span>
+        <button onClick={toggleFavorite} style={styles.favoriteButton}>
+          {isFavorite ? <FaStar color="#FFD700" /> : <FaRegStar color="#999" />}
+        </button>
+      </div>
 
-      <Text style={styles.detail}>{technician.jobType} - {technician.lga}</Text>
+      <p style={styles.detail}>{technician.jobType} - {technician.lga}</p>
 
-      <View style={styles.row}>
-        <Icon
-          name={technician.available ? 'check-circle' : 'close-circle'}
-          size={20}
-          color={technician.available ? '#4CAF50' : '#f44336'}
-          style={styles.icon}
-        />
-        <Text style={{ color: technician.available ? '#4CAF50' : '#f44336' }}>
+      <div style={styles.row}>
+        {technician.available ? (
+          <FaCheckCircle color="#4CAF50" style={styles.icon} />
+        ) : (
+          <FaTimesCircle color="#f44336" style={styles.icon} />
+        )}
+        <span style={{ color: technician.available ? '#4CAF50' : '#f44336' }}>
           {technician.available ? 'Available' : 'Unavailable'}
-        </Text>
-      </View>
-    </TouchableOpacity>
+        </span>
+      </div>
+    </div>
   );
 }
 
-const styles = StyleSheet.create({
-  card: { padding: 15, marginVertical: 10, borderWidth: 1, borderColor: '#ccc', borderRadius: 8, backgroundColor: '#fff' },
-  row: { flexDirection: 'row', alignItems: 'center', marginBottom: 5 },
-  icon: { marginLeft: 8 },
-  name: { fontSize: 18, fontWeight: 'bold', flex: 1 },
-  detail: { fontSize: 14, color: '#333' },
-});
+const styles = {
+  card: {
+    padding: '15px',
+    margin: '10px 0',
+    border: '1px solid #ccc',
+    borderRadius: '8px',
+    backgroundColor: '#fff',
+    cursor: 'pointer',
+  },
+  row: {
+    display: 'flex',
+    alignItems: 'center',
+    marginBottom: '5px',
+  },
+  icon: {
+    marginLeft: '8px',
+  },
+  name: {
+    fontSize: '18px',
+    fontWeight: 'bold',
+    flex: 1,
+    marginLeft: '8px',
+  },
+  detail: {
+    fontSize: '14px',
+    color: '#333',
+  },
+  favoriteButton: {
+    background: 'none',
+    border: 'none',
+    cursor: 'pointer',
+  },
+};

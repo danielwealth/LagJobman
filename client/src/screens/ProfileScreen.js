@@ -1,6 +1,5 @@
 // src/screens/ProfileScreen.js
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, Alert } from 'react-native';
 import AvailabilityToggle from '../components/AvailabilityToggle';
 import ImageUploader from '../components/ImageUploader';
 import { updateTechnician } from '../services/technicianService';

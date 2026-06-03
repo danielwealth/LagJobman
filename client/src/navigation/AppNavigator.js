@@ -1,7 +1,7 @@
 // src/navigation/AppNavigator.js
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { getFavorites } from '../services/FavoritesService';
+import { getFavorites } from '../services/favoritesService';
 import { getAllTechnicians } from '../services/technicianService';
 
 // Import screens

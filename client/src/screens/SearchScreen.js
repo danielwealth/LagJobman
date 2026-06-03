@@ -1,6 +1,5 @@
 // src/screens/SearchScreen.js
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Picker, FlatList } from 'react-native';
 import TechnicianCard from '../components/TechnicianCard';
 import { searchTechnicians } from '../services/searchService';
 import { globalStyles } from '../styles/globalStyles';

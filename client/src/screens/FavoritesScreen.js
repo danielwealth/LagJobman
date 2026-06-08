@@ -3,28 +3,29 @@ import React from 'react';
 import { getFavorites } from '../services/favoritesService';
 import TechnicianCard from '../components/TechnicianCard';
 import { globalStyles } from '../styles/globalStyles';
+import { useNavigate } from 'react-router-dom';
 
-export default function FavoritesScreen({ navigation }) {
+export default function FavoritesScreen() {
   const favorites = getFavorites();
+  const navigate = useNavigate();
 
   return (
-    <View style={globalStyles.container}>
-      <Text style={globalStyles.title}>Favorite Technicians</Text>
+    <div style={globalStyles.container}>
+      <h2 style={globalStyles.title}>Favorite Technicians</h2>
 
       {favorites.length === 0 ? (
-        <Text>No favorites yet. Tap the star icon on a technician to add them.</Text>
+        <p>No favorites yet. Tap the star icon on a technician to add them.</p>
       ) : (
-        <FlatList
-          data={favorites}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => (
+        <div>
+          {favorites.map((item) => (
             <TechnicianCard
+              key={item.id}
               technician={item}
-              onPress={() => navigation.navigate('Profile', { technician: item })}
+              onPress={() => navigate('/profile', { state: { technician: item } })}
             />
-          )}
-        />
+          ))}
+        </div>
       )}
-    </View>
+    </div>
   );
 }

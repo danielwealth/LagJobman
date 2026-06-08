@@ -3,7 +3,7 @@ import React from 'react';
 import { addFavorite, removeFavorite, getFavorites } from '../services/favoritesService';
 
 // For icons, you can use a library like react-icons (https://react-icons.github.io/react-icons/)
-import { FaBolt, FaWater, FaHammer, FaSaw, FaPaintBrush, FaTh, FaSolarPanel, FaCompass, FaBroom, FaBook, FaWindowMaximize, FaStar, FaRegStar, FaCheckCircle, FaTimesCircle, FaUser } from 'react-icons/fa';
+import { FaBolt, FaWater, FaHammer, FaTools, FaPaintBrush, FaTh, FaSolarPanel, FaCompass, FaBroom, FaBook, FaWindowMaximize, FaStar, FaRegStar, FaCheckCircle, FaTimesCircle, FaUser } from 'react-icons/fa';
 
 export default function TechnicianCard({ technician, onPress }) {
   const jobIcons = {

@@ -6,26 +6,31 @@ import { globalStyles } from '../styles/globalStyles';
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
 
   const handleLogin = async () => {
+    setError('');
+    setSuccess('');
+
     if (!email || !password) {
-      window.alert('Error: Please enter both email and password.');
+      setError('Please enter both email and password.');
       return;
     }
 
     try {
       const result = await loginUser(email, password);
       if (result.success) {
-        window.alert('Success: Logged in successfully!');
+        setSuccess('Logged in successfully!');
         if (navigation) {
           navigation.navigate('Home'); // Redirect to Home after login
         }
       } else {
-        window.alert('Error: Login failed. Try again.');
+        setError('Login failed. Try again.');
       }
-    } catch (error) {
-      window.alert('Error: Something went wrong.');
-      console.error(error);
+    } catch (err) {
+      setError('Something went wrong. Please try again later.');
+      console.error(err);
     }
   };
 
@@ -48,6 +53,9 @@ export default function LoginScreen({ navigation }) {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
+
+      {error && <p style={{ color: 'red', marginTop: '5px' }}>{error}</p>}
+      {success && <p style={{ color: 'green', marginTop: '5px' }}>{success}</p>}
 
       <button style={globalStyles.button} onClick={handleLogin}>
         Login

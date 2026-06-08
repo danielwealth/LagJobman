@@ -9,55 +9,56 @@ export default function LoginScreen({ navigation }) {
 
   const handleLogin = async () => {
     if (!email || !password) {
-      Alert.alert('Error', 'Please enter both email and password.');
+      window.alert('Error: Please enter both email and password.');
       return;
     }
 
     try {
       const result = await loginUser(email, password);
       if (result.success) {
-        Alert.alert('Success', 'Logged in successfully!');
-        navigation.navigate('Home'); // Redirect to Home after login
+        window.alert('Success: Logged in successfully!');
+        if (navigation) {
+          navigation.navigate('Home'); // Redirect to Home after login
+        }
       } else {
-        Alert.alert('Error', 'Login failed. Try again.');
+        window.alert('Error: Login failed. Try again.');
       }
     } catch (error) {
-      Alert.alert('Error', 'Something went wrong.');
+      window.alert('Error: Something went wrong.');
       console.error(error);
     }
   };
 
   return (
-    <View style={globalStyles.container}>
-      <Text style={globalStyles.title}>Technician Login</Text>
+    <div style={globalStyles.container}>
+      <h2 style={globalStyles.title}>Technician Login</h2>
 
-      <TextInput
+      <input
         style={globalStyles.input}
+        type="email"
         placeholder="Email"
         value={email}
-        onChangeText={setEmail}
-        keyboardType="email-address"
-        autoCapitalize="none"
+        onChange={(e) => setEmail(e.target.value)}
       />
 
-      <TextInput
+      <input
         style={globalStyles.input}
+        type="password"
         placeholder="Password"
         value={password}
-        onChangeText={setPassword}
-        secureTextEntry
+        onChange={(e) => setPassword(e.target.value)}
       />
 
-      <TouchableOpacity style={globalStyles.button} onPress={handleLogin}>
-        <Text style={globalStyles.buttonText}>Login</Text>
-      </TouchableOpacity>
+      <button style={globalStyles.button} onClick={handleLogin}>
+        Login
+      </button>
 
-      <TouchableOpacity
+      <button
         style={globalStyles.button}
-        onPress={() => navigation.navigate('Register')}
+        onClick={() => navigation && navigation.navigate('Register')}
       >
-        <Text style={globalStyles.buttonText}>Register Instead</Text>
-      </TouchableOpacity>
-    </View>
+        Register Instead
+      </button>
+    </div>
   );
 }

@@ -2,13 +2,15 @@
 import React, { useState } from 'react';
 import TechnicianCard from '../components/TechnicianCard';
 import { searchTechnicians } from '../services/searchService';
+import { useNavigate } from 'react-router-dom';
 
 const lagosLGAs = ['Ikeja', 'Surulere', 'Eti-Osa', 'Alimosho', 'Apapa'];
 const jobTypes = ['Electrician', 'Plumber', 'Bricklayer', 'Carpenter', 'Painter'];
 
-export default function SearchScreen({ navigation }) {
+export default function SearchScreen() {
   const [selectedJob, setSelectedJob] = useState(jobTypes[0]);
   const [selectedLga, setSelectedLga] = useState(lagosLGAs[0]);
+  const navigate = useNavigate();
 
   // Call search service
   const filteredTechnicians = searchTechnicians(selectedJob, selectedLga);
@@ -48,7 +50,7 @@ export default function SearchScreen({ navigation }) {
             <TechnicianCard
               key={item.id}
               technician={item}
-              onPress={() => navigation && navigation.navigate('Profile', { technician: item })}
+              onPress={() => navigate('/profile', { state: { technician: item } })}
             />
           ))}
         </div>

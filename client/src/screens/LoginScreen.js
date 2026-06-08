@@ -2,19 +2,25 @@
 import React, { useState } from 'react';
 import { loginUser } from '../services/authService';
 import { globalStyles } from '../styles/globalStyles';
+import { useNavigate } from 'react-router-dom';
 
-export default function LoginScreen({ navigation }) {
+export default function LoginScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleLogin = async () => {
     setError('');
     setSuccess('');
+    setLoading(true);
 
     if (!email || !password) {
       setError('Please enter both email and password.');
+      setLoading(false);
       return;
     }
 
@@ -22,15 +28,15 @@ export default function LoginScreen({ navigation }) {
       const result = await loginUser(email, password);
       if (result.success) {
         setSuccess('Logged in successfully!');
-        if (navigation) {
-          navigation.navigate('Home'); // Redirect to Home after login
-        }
+        navigate('/home'); // ✅ Redirect to Home after login
       } else {
         setError('Login failed. Try again.');
       }
     } catch (err) {
       setError('Something went wrong. Please try again later.');
       console.error(err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -57,13 +63,22 @@ export default function LoginScreen({ navigation }) {
       {error && <p style={{ color: 'red', marginTop: '5px' }}>{error}</p>}
       {success && <p style={{ color: 'green', marginTop: '5px' }}>{success}</p>}
 
-      <button style={globalStyles.button} onClick={handleLogin}>
-        Login
+      <button
+        style={{
+          ...globalStyles.button,
+          opacity: loading ? 0.6 : 1,
+          cursor: loading ? 'not-allowed' : 'pointer',
+        }}
+        onClick={handleLogin}
+        disabled={loading}
+      >
+        {loading ? 'Logging in…' : 'Login'}
       </button>
 
       <button
         style={globalStyles.button}
-        onClick={() => navigation && navigation.navigate('Register')}
+        onClick={() => navigate('/register')}
+        disabled={loading}
       >
         Register Instead
       </button>

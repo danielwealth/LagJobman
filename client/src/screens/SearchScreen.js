@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 import TechnicianCard from '../components/TechnicianCard';
 import { searchTechnicians } from '../services/searchService';
-import { globalStyles } from '../styles/globalStyles';
 
 const lagosLGAs = ['Ikeja', 'Surulere', 'Eti-Osa', 'Alimosho', 'Apapa'];
 const jobTypes = ['Electrician', 'Plumber', 'Bricklayer', 'Carpenter', 'Painter'];
@@ -15,38 +14,72 @@ export default function SearchScreen({ navigation }) {
   const filteredTechnicians = searchTechnicians(selectedJob, selectedLga);
 
   return (
-    <View style={globalStyles.container}>
-      <Text style={globalStyles.title}>Search Technicians</Text>
+    <div style={styles.container}>
+      <h2 style={styles.title}>Search Technicians</h2>
 
-      <Text style={globalStyles.label}>Job Type</Text>
-      <Picker selectedValue={selectedJob} onValueChange={(val) => setSelectedJob(val)}>
-        {jobTypes.map((job) => <Picker.Item key={job} label={job} value={job} />)}
-      </Picker>
+      <label style={styles.label}>Job Type</label>
+      <select
+        value={selectedJob}
+        onChange={(e) => setSelectedJob(e.target.value)}
+        style={styles.select}
+      >
+        {jobTypes.map((job) => (
+          <option key={job} value={job}>{job}</option>
+        ))}
+      </select>
 
-      <Text style={globalStyles.label}>Lagos LGA</Text>
-      <Picker selectedValue={selectedLga} onValueChange={(val) => setSelectedLga(val)}>
-        {lagosLGAs.map((area) => <Picker.Item key={area} label={area} value={area} />)}
-      </Picker>
+      <label style={styles.label}>Lagos LGA</label>
+      <select
+        value={selectedLga}
+        onChange={(e) => setSelectedLga(e.target.value)}
+        style={styles.select}
+      >
+        {lagosLGAs.map((area) => (
+          <option key={area} value={area}>{area}</option>
+        ))}
+      </select>
 
-      <Text style={globalStyles.label}>Available Technicians</Text>
+      <label style={styles.label}>Available Technicians</label>
       {filteredTechnicians.length === 0 ? (
-        <Text>No available technicians found.</Text>
+        <p>No available technicians found.</p>
       ) : (
-        <FlatList
-          data={filteredTechnicians}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => (
+        <div>
+          {filteredTechnicians.map((item) => (
             <TechnicianCard
+              key={item.id}
               technician={item}
-              onPress={() => navigation.navigate('Profile', { technician: item })}
+              onPress={() => navigation && navigation.navigate('Profile', { technician: item })}
             />
-          )}
-        />
+          ))}
+        </div>
       )}
-    </View>
+    </div>
   );
 }
 
-const styles = StyleSheet.create({
-  label: { fontSize: 16, marginTop: 10 },
-});
+const styles = {
+  container: {
+    padding: '20px',
+    maxWidth: '600px',
+    margin: '0 auto',
+    backgroundColor: '#f9f9f9',
+    borderRadius: '8px',
+  },
+  title: {
+    fontSize: '24px',
+    marginBottom: '15px',
+  },
+  label: {
+    display: 'block',
+    fontSize: '16px',
+    marginTop: '10px',
+    marginBottom: '5px',
+  },
+  select: {
+    width: '100%',
+    padding: '8px',
+    marginBottom: '15px',
+    borderRadius: '4px',
+    border: '1px solid #ccc',
+  },
+};

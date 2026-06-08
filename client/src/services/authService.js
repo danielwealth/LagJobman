@@ -1,6 +1,6 @@
 // src/services/authService.js
 
-const API_BASE = "https://lagjobman.onrender.com/api/auth"; 
+const API_BASE = "https://lagosjobman.onrender.com/api/auth"; 
 // Replace with your actual Render backend URL
 
 // Register a new user

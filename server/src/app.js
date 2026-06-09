@@ -1,4 +1,5 @@
 // server/src/app.js
+import cors from 'cors';
 import express from 'express';
 import dotenv from 'dotenv';
 import connectDB from './config/db.js';
@@ -15,6 +16,10 @@ connectDB();
 const app = express();
 
 // Middleware
+app.use(cors({
+  origin: ['http://localhost:3000', 'https://lagosjobman.netlify.app'],
+  credentials: true
+}));
 app.use(express.json()); // Parse JSON bodies
 
 // Routes

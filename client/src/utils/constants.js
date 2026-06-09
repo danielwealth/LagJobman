@@ -1,38 +1,17 @@
 // src/utils/constants.js
 
-// Lagos LGAs
-export const LAGOS_LGAS = [
-  'Ikeja',
-  'Surulere',
-  'Eti-Osa',
-  'Alimosho',
-  'Apapa',
-  'Mushin',
-  'Kosofe',
-  'Oshodi-Isolo',
-  'Agege',
-  'Ifako-Ijaiye',
+// client/src/data/constants.js
+
+export const lagosLGAs = [
+  'Agege','Ajeromi-Ifelodun','Alimosho','Amuwo-Odofin','Apapa','Badagry',
+  'Epe','Eti-Osa','Ikeja','Ikorodu','Kosofe','Lagos Island','Lagos Mainland',
+  'Mushin','Ojo','Oshodi-Isolo','Shomolu','Surulere','Ifako-Ijaiye','Ibeju-Lekki'
 ];
 
-// Job types
-export const JOB_TYPES = [
-  'Electrician',
-  'Plumber',
-  'Bricklayer',
-  'Carpenter',
-  'Painter',
-  'Welder',
-  'Mechanic',
-  'Tiler',
-  'SolarInstaller',
-  'Engineer',
-  'Cleaner',
-  'Labourer',
-  'BrickMoulder',
-   'HeaterReparer',
-   'HomeLessonTeacher',
-   'AluminiumMan'
-      
+export const jobTypes = [
+  'Electrician','Plumber','Bricklayer','Carpenter','Painter','Tiler','Solar Installer',
+  'Welder','Mechanic','AC/Fridge Repair','Generator Technician','ICT Support',
+  'Phone Repair','CCTV Installer','Satellite Dish Installer'
 ];
 
 // Color palette

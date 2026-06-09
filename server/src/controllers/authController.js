@@ -3,7 +3,19 @@ import { registerUser, loginUser, logoutUser } from '../services/authService.js'
 
 export const register = async (req, res) => {
   try {
-    const user = await registerUser(req.body);
+    // Extract uploaded file paths
+    const faceImage = req.files?.faceImage?.[0]?.path || null;
+    const workImage = req.files?.workImage?.[0]?.path || null;
+
+    // Merge body with file paths
+    const userData = {
+      ...req.body,
+      faceImage,
+      workImage
+    };
+
+    const user = await registerUser(userData);
+
     res.status(201).json({ success: true, user });
   } catch (error) {
     res.status(400).json({ success: false, message: error.message });

@@ -6,15 +6,16 @@ import { createTechnician } from '../services/technicianService';
 import { globalStyles } from '../styles/globalStyles';
 import { useNavigate } from 'react-router-dom';
 
-const lagosLGAs = ['Ikeja', 'Surulere', 'Eti-Osa', 'Alimosho', 'Apapa'];
+const lagosLGAs = [
+  'Agege','Ajeromi-Ifelodun','Alimosho','Amuwo-Odofin','Apapa','Badagry',
+  'Epe','Eti-Osa','Ikeja','Ikorodu','Kosofe','Lagos Island','Lagos Mainland',
+  'Mushin','Ojo','Oshodi-Isolo','Shomolu','Surulere','Ifako-Ijaiye','Ibeju-Lekki'
+];
+
 const jobTypes = [
-  'Electrician',
-  'Plumber',
-  'Bricklayer',
-  'Carpenter',
-  'Painter',
-  'Tiler',
-  'SolarInstaller',
+  'Electrician','Plumber','Bricklayer','Carpenter','Painter','Tiler','Solar Installer',
+  'Welder','Mechanic','AC/Fridge Repair','Generator Technician','ICT Support',
+  'Phone Repair','CCTV Installer','Satellite Dish Installer'
 ];
 
 export default function RegisterScreen() {
@@ -28,19 +29,9 @@ export default function RegisterScreen() {
   const navigate = useNavigate();
 
   const handleRegister = () => {
-    const profile = {
-      name,
-      jobType,
-      lga,
-      available,
-      faceImage,
-      workImage,
-    };
-
+    const profile = { name, jobType, lga, available, faceImage, workImage };
     const newTech = createTechnician(profile);
     window.alert(`Technician ${newTech.name} registered successfully!`);
-
-    // Navigate to Profile screen with the new technician data
     navigate('/profile', { state: { technician: newTech } });
   };
 

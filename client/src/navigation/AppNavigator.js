@@ -5,6 +5,7 @@ import { getFavorites } from '../services/favoritesService';
 import { getAllTechnicians } from '../services/technicianService';
 
 // Import screens
+import SignUpScreen from '../screens/SignUpScreen';
 import HomeScreen from '../screens/HomeScreen';
 import RegisterScreen from '../screens/RegisterScreen';
 import SearchScreen from '../screens/SearchScreen';
@@ -34,6 +35,7 @@ export default function AppNavigator() {
   return (
     <Router>
       <Routes>
+        <Route path="/signup" element={<SignUpScreen />} />
         <Route path="/login" element={<LoginScreen />} />
         <Route path="/home" element={<HomeScreen />} />
         <Route path="/register" element={<RegisterScreen />} />

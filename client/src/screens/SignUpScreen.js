@@ -26,9 +26,11 @@ export default function SignUpScreen() {
 
     try {
       const result = await registerUser(email, password);
-      if (result.success) {
+
+      // ✅ Check both success and user object
+      if (result.success && result.user) {
         setSuccess('Account created successfully!');
-        // Redirect to login so user can sign in
+        // Redirect to login after short delay
         setTimeout(() => navigate('/'), 1500);
       } else {
         setError(result.message || 'Registration failed.');
@@ -43,7 +45,7 @@ export default function SignUpScreen() {
 
   return (
     <div style={globalStyles.container}>
-      <h2 style={globalStyles.title}>User Sign Up</h2>
+      <h2 style={globalStyles.title}>Create Your Account</h2>
 
       <input
         style={globalStyles.input}

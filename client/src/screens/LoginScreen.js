@@ -26,11 +26,14 @@ export default function LoginScreen() {
 
     try {
       const result = await loginUser(email, password);
-      if (result.success) {
+
+      // ✅ Check both success and token
+      if (result.success && result.token) {
         setSuccess('Logged in successfully!');
-        navigate('/home'); // ✅ Redirect to Home after login
+        // Token is already saved in localStorage by authService
+        navigate('/home'); 
       } else {
-        setError('Login failed. Try again.');
+        setError(result.message || 'Login failed. Try again.');
       }
     } catch (err) {
       setError('Something went wrong. Please try again later.');
@@ -77,10 +80,10 @@ export default function LoginScreen() {
 
       <button
         style={globalStyles.button}
-        onClick={() => navigate('/register')}
+        onClick={() => navigate('/signup')} // ✅ Navigate to SignUpScreen
         disabled={loading}
       >
-        Register Instead
+        Sign Up Instead
       </button>
     </div>
   );

@@ -19,7 +19,7 @@ export default function AppNavigator() {
 
   useEffect(() => {
     // Check login state using localStorage
-    const token = localStorage.getItem('userToken');
+    const token = localStorage.getItem('authToken');
     setInitialRoute(token ? '/home' : '/login');
   }, []);
 

@@ -4,8 +4,28 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { protect } from '../middleware/authMiddleware.js';
 import { create, list, detail, update, remove } from '../controllers/technicianController.js';
+import Technician from '../models/technician.js';
 
 const router = express.Router();
+// POST /api/technicians/register
+router.post('/register', async (req, res) => {
+  try {
+    const technician = new Technician(req.body);
+    await technician.save();
+
+    res.json({
+      success: true,
+      technician,
+      message: 'Technician registered successfully',
+    });
+  } catch (err) {
+    console.error('Technician registration error:', err);
+    res.status(500).json({
+      success: false,
+      message: 'Server error during technician registration',
+    });
+  }
+});
 
 // Resolve __dirname for ES modules
 const __filename = fileURLToPath(import.meta.url);

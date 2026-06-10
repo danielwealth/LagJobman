@@ -12,9 +12,11 @@ export const register = async (req, res) => {
       ? `/uploads/${req.files.workImage[0].filename}`
       : null;
 
-    // ✅ Merge body with file URLs
+    // ✅ Merge body with file URLs and new fields
     const userData = {
       ...req.body,
+      phoneNumber: req.body.phoneNumber || null, // new field
+      message: req.body.message || null,         // new field
       faceImage,
       workImage
     };

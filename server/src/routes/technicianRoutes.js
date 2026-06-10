@@ -3,13 +3,7 @@ import multer from 'multer';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { protect } from '../middleware/authMiddleware.js';
-import {
-  create,
-  list,
-  detail,
-  update,
-  remove,
-} from '../controllers/technicianController.js';
+import { create, list, detail, update, remove } from '../controllers/technicianController.js';
 
 const router = express.Router();
 
@@ -26,12 +20,11 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
-// ✅ Upload endpoint for images
+// ✅ Upload endpoint
 router.post('/upload', protect, upload.single('image'), (req, res) => {
   if (!req.file) {
     return res.status(400).json({ message: 'No file uploaded' });
   }
-  // Return full URL to the uploaded file
   const fileUrl = `/uploads/${req.file.filename}`;
   res.json({ url: fileUrl });
 });

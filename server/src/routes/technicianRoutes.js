@@ -1,5 +1,7 @@
-// server/src/routes/technicianRoutes.js
 import express from 'express';
+import multer from 'multer';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import { protect } from '../middleware/authMiddleware.js';
 import {
   create,
@@ -11,19 +13,34 @@ import {
 
 const router = express.Router();
 
-// GET /api/technicians
+// Resolve __dirname for ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Configure multer for file uploads
+const storage = multer.diskStorage({
+  destination: path.join(__dirname, '../../uploads'),
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + '-' + file.originalname);
+  },
+});
+const upload = multer({ storage });
+
+// ✅ Upload endpoint for images
+router.post('/upload', protect, upload.single('image'), (req, res) => {
+  if (!req.file) {
+    return res.status(400).json({ message: 'No file uploaded' });
+  }
+  // Return full URL to the uploaded file
+  const fileUrl = `/uploads/${req.file.filename}`;
+  res.json({ url: fileUrl });
+});
+
+// ✅ Technician CRUD
 router.get('/', list);
-
-// GET /api/technicians/:id
 router.get('/:id', detail);
-
-// POST /api/technicians
 router.post('/', protect, create);
-
-// PUT /api/technicians/:id
 router.put('/:id', protect, update);
-
-// DELETE /api/technicians/:id
 router.delete('/:id', protect, remove);
 
 export default router;

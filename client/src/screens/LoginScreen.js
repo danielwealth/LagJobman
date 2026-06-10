@@ -1,4 +1,3 @@
-// src/screens/LoginScreen.js
 import React, { useState } from 'react';
 import { loginUser } from '../services/authService';
 import { globalStyles } from '../styles/globalStyles';
@@ -8,14 +7,12 @@ export default function LoginScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
   const handleLogin = async () => {
     setError('');
-    setSuccess('');
     setLoading(true);
 
     if (!email || !password) {
@@ -27,13 +24,11 @@ export default function LoginScreen() {
     try {
       const result = await loginUser(email, password);
 
-      // ✅ Check both success and token
       if (result.success && result.token) {
-        setSuccess('Logged in successfully!');
-        // Token is already saved in localStorage by authService
-        navigate('/home'); 
+        localStorage.setItem('token', result.token);
+        navigate('/home'); // ✅ go to home after login
       } else {
-        setError(result.message || 'Login failed. Try again.');
+        setError(result.message || 'Login failed.');
       }
     } catch (err) {
       setError('Something went wrong. Please try again later.');
@@ -45,7 +40,7 @@ export default function LoginScreen() {
 
   return (
     <div style={globalStyles.container}>
-      <h2 style={globalStyles.title}>Technician Login</h2>
+      <h2 style={globalStyles.title}>Login</h2>
 
       <input
         style={globalStyles.input}
@@ -64,7 +59,6 @@ export default function LoginScreen() {
       />
 
       {error && <p style={{ color: 'red', marginTop: '5px' }}>{error}</p>}
-      {success && <p style={{ color: 'green', marginTop: '5px' }}>{success}</p>}
 
       <button
         style={{
@@ -77,27 +71,13 @@ export default function LoginScreen() {
       >
         {loading ? 'Logging in…' : 'Login'}
       </button>
-        <button
-  style={globalStyles.button}
-  onClick={() => navigate('/signup')}
->
-  Sign Up
-</button>
-
-<button
-  style={globalStyles.button}
-  onClick={() => navigate('/register')}
->
-  Register as Technician
-</button>
-
 
       <button
         style={globalStyles.button}
-        onClick={() => navigate('/signup')} // ✅ Navigate to SignUpScreen
+        onClick={() => navigate('/signup')}
         disabled={loading}
       >
-        Sign Up Instead
+        Sign Up
       </button>
     </div>
   );

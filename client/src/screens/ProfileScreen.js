@@ -1,9 +1,10 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';   // ✅ add useNavigate
 import { globalStyles } from '../styles/globalStyles';
 
 export default function ProfileScreen() {
   const location = useLocation();
+  const navigate = useNavigate();   // ✅ create navigate hook
   const technician = location.state?.technician;
 
   if (!technician) {
@@ -54,6 +55,14 @@ export default function ProfileScreen() {
           />
         </div>
       )}
+
+      {/* ✅ Add Go Home button */}
+      <button
+        style={{ ...globalStyles.button, marginTop: '20px' }}
+        onClick={() => navigate('/home')}
+      >
+        Go Home
+      </button>
     </div>
   );
 }

@@ -35,7 +35,7 @@ export default function RegisterScreen() {
       return;
     }
 
-    const profile = { name, telephone, description, jobType, lga, available, faceImage, workImage };
+    const profile = { name, phoneNumber: telephone, description, jobType, lga, available, faceImage, workImage };
 
     try {
       const result = await createTechnician(profile);

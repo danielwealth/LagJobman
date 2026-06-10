@@ -5,8 +5,12 @@ import { createTechnician } from '../services/technicianService';
 import { globalStyles } from '../styles/globalStyles';
 import { useNavigate } from 'react-router-dom';
 
-const lagosLGAs = [/* ... same list ... */];
-const jobTypes = [/* ... same list ... */];
+const lagosLGAs = ['Agege','Ajeromi-Ifelodun','Alimosho','Amuwo-Odofin','Apapa','Badagry',
+  'Epe','Eti-Osa','Ikeja','Ikorodu','Kosofe','Lagos Island','Lagos Mainland',
+  'Mushin','Ojo','Oshodi-Isolo','Shomolu','Surulere','Ifako-Ijaiye','Ibeju-Lekki'];
+const jobTypes = ['Electrician','Plumber','Bricklayer','Carpenter','Painter','Tiler','Solar Installer',
+  'Welder','Mechanic','AC/Fridge Repair','Generator Technician','ICT Support',
+  'Phone Repair','CCTV Installer','Satellite Dish Installer'];
 
 export default function RegisterScreen() {
   const [name, setName] = useState('');

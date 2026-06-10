@@ -1,4 +1,3 @@
-// src/screens/ProfileScreen.js
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 import { globalStyles } from '../styles/globalStyles';
@@ -16,46 +15,43 @@ export default function ProfileScreen() {
       <h2 style={globalStyles.title}>Technician Profile</h2>
 
       <p><strong>Name:</strong> {technician.name}</p>
-      <p><strong>Phone:</strong> {technician.phoneNumber}</p>
       <p><strong>Job Type:</strong> {technician.jobType}</p>
       <p><strong>LGA:</strong> {technician.lga}</p>
       <p><strong>Available:</strong> {technician.available ? 'Yes' : 'No'}</p>
 
       {technician.faceImage && (
-        <div>
+        <div style={{ marginTop: '15px' }}>
           <strong>Profile Photo:</strong>
-          <img 
-            src={`https://lagosjobman.onrender.com${technician.faceImage}`} 
-            alt="Profile" 
-            style={{ width: '150px', marginTop: '10px', borderRadius: '8px' }} 
+          <img
+            src={technician.faceImage}
+            alt="Profile"
+            style={{
+              width: '180px',
+              height: '180px',
+              objectFit: 'cover',
+              borderRadius: '8px',
+              marginTop: '8px',
+              border: '2px solid #ccc'
+            }}
           />
         </div>
       )}
 
       {technician.workImage && (
-        <div>
+        <div style={{ marginTop: '15px' }}>
           <strong>Work Sample:</strong>
-          <img 
-            src={`https://lagosjobman.onrender.com${technician.workImage}`} 
-            alt="Work Sample" 
-            style={{ width: '150px', marginTop: '10px', borderRadius: '8px' }} 
+          <img
+            src={technician.workImage}
+            alt="Work Sample"
+            style={{
+              width: '250px',
+              height: '180px',
+              objectFit: 'cover',
+              borderRadius: '8px',
+              marginTop: '8px',
+              border: '2px solid #ccc'
+            }}
           />
-        </div>
-      )}
-
-      {technician.message && (
-        <div
-          style={{
-            marginTop: '20px',
-            padding: '15px',
-            backgroundColor: '#f0f8ff',
-            borderLeft: '5px solid #0077cc',
-            borderRadius: '8px',
-            fontStyle: 'italic'
-          }}
-        >
-          <strong>Message from Technician:</strong>
-          <p style={{ marginTop: '8px' }}>{technician.message}</p>
         </div>
       )}
     </div>

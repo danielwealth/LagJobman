@@ -9,22 +9,29 @@ export default function ImageUploader({ label, onImageSelected }) {
     const file = event.target.files[0];
     if (!file) return;
 
-    // Create a preview URL for immediate display
+    // Show preview immediately
     const previewUrl = URL.createObjectURL(file);
     setPreview(previewUrl);
 
-    // Pass preview URL back to parent
-    onImageSelected(previewUrl);
+    // Upload to backend
+    try {
+      const formData = new FormData();
+      formData.append('image', file);
 
-    // If you want permanent storage, upload to backend here:
-    // const formData = new FormData();
-    // formData.append('image', file);
-    // const response = await fetch('https://your-backend.com/upload', {
-    //   method: 'POST',
-    //   body: formData,
-    // });
-    // const data = await response.json();
-    // onImageSelected(data.url); // backend returns full URL
+      const response = await fetch('https://lagjobman.onrender.com/api/upload', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) throw new Error('Upload failed');
+      const data = await response.json();
+
+      // Backend returns full URL
+      onImageSelected(data.url);
+    } catch (err) {
+      console.error('Image upload error:', err);
+      alert('Failed to upload image. Please try again.');
+    }
   };
 
   return (

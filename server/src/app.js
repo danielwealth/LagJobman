@@ -9,6 +9,7 @@ import authRoutes from './routes/authRoutes.js';
 import technicianRoutes from './routes/technicianRoutes.js';
 import searchRoutes from './routes/searchRoutes.js';
 import errorHandler from './middleware/errorHandler.js';
+import uploadRoutes from './routes/uploadRoutes.js';
 
 dotenv.config();
 
@@ -35,6 +36,7 @@ app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 app.use('/api/auth', authRoutes);
 app.use('/api/technicians', technicianRoutes);
 app.use('/api/search', searchRoutes);
+app.use('/api/upload', uploadRoutes);
 
 // ✅ Error handler (last middleware)
 app.use(errorHandler);

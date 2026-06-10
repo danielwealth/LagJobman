@@ -19,9 +19,9 @@ export default function App() {
     <Router>
       <Routes>
         {/* Public routes */}
-        <Route path="/" element={<LoginScreen />} />
-        <Route path="/login" element={<LoginScreen />} />
+        <Route path="/" element={<SignUpScreen />} />   {/* ✅ Signup is now default */}
         <Route path="/signup" element={<SignUpScreen />} />
+        <Route path="/login" element={<LoginScreen />} />
 
         {/* Protected routes */}
         <Route

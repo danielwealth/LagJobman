@@ -1,8 +1,7 @@
 // src/navigation/AppNavigator.js
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { getFavorites } from '../services/favoritesService';
-import { getAllTechnicians } from '../services/technicianService';
+import { getAuthToken } from '../services/authService';  // ✅ use centralized authService
 
 // Import screens
 import SignUpScreen from '../screens/SignUpScreen';
@@ -18,9 +17,9 @@ export default function AppNavigator() {
   const [initialRoute, setInitialRoute] = useState(null);
 
   useEffect(() => {
-    // Check login state using localStorage
-    const token = localStorage.getItem('authToken');
-    setInitialRoute(token ? '/home' : '/login');
+    // ✅ Use authService to check login state
+    const token = getAuthToken();
+    setInitialRoute(token ? '/home' : '/signup');
   }, []);
 
   if (!initialRoute) {
@@ -35,16 +34,20 @@ export default function AppNavigator() {
   return (
     <Router>
       <Routes>
+        {/* Public routes */}
         <Route path="/signup" element={<SignUpScreen />} />
         <Route path="/login" element={<LoginScreen />} />
+
+        {/* Protected routes */}
         <Route path="/home" element={<HomeScreen />} />
         <Route path="/register" element={<RegisterScreen />} />
         <Route path="/search" element={<SearchScreen />} />
         <Route path="/technicians" element={<TechnicianListScreen />} />
         <Route path="/favorites" element={<FavoritesScreen />} />
         <Route path="/profile" element={<ProfileScreen />} />
+
         {/* Redirect root to initial route */}
-        <Route path="/" element={<Navigate to={initialRoute} />} />
+        <Route path="/" element={<Navigate to={initialRoute} replace />} />
       </Routes>
     </Router>
   );

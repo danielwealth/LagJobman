@@ -1,5 +1,5 @@
 // src/screens/HomeScreen.js
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { globalStyles } from '../styles/globalStyles';
 import { logoutUser } from '../services/authService';
 import logo from '../assets/logo2.png';
@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 
 export default function HomeScreen() {
   const navigate = useNavigate();
+  const [technicians, setTechnicians] = useState([]);
 
   const handleLogout = async () => {
     try {
@@ -20,6 +21,20 @@ export default function HomeScreen() {
       console.error(error);
     }
   };
+
+  // ✅ Fetch technicians when Home loads
+  useEffect(() => {
+    const fetchTechnicians = async () => {
+      try {
+        const res = await fetch('https://lagjobman.onrender.com/api/technicians');
+        const data = await res.json();
+        setTechnicians(data);
+      } catch (err) {
+        console.error('Failed to fetch technicians:', err);
+      }
+    };
+    fetchTechnicians();
+  }, []);
 
   return (
     <div style={globalStyles.container}>
@@ -43,6 +58,22 @@ export default function HomeScreen() {
       <button style={globalStyles.button} onClick={handleLogout}>
         Logout
       </button>
+
+      {/* ✅ List of registered technicians */}
+      <div style={{ marginTop: '30px', textAlign: 'left' }}>
+        <h3>Registered Technicians</h3>
+        {technicians.length === 0 ? (
+          <p>No technicians found.</p>
+        ) : (
+          <ul>
+            {technicians.map((tech) => (
+              <li key={tech._id} style={{ marginBottom: '10px' }}>
+                <strong>{tech.name}</strong> — {tech.jobType} ({tech.lga})
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
     </div>
   );
 }

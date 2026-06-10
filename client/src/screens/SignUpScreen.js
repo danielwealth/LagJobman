@@ -1,4 +1,3 @@
-// src/screens/SignUpScreen.js
 import React, { useState } from 'react';
 import { registerUser } from '../services/authService';
 import { globalStyles } from '../styles/globalStyles';
@@ -27,11 +26,10 @@ export default function SignUpScreen() {
     try {
       const result = await registerUser(email, password);
 
-      // ✅ Check both success and user object
       if (result.success && result.user) {
         setSuccess('Account created successfully!');
         // Redirect to login after short delay
-        setTimeout(() => navigate('/'), 1500);
+        setTimeout(() => navigate('/login'), 1500);
       } else {
         setError(result.message || 'Registration failed.');
       }
@@ -80,7 +78,7 @@ export default function SignUpScreen() {
 
       <button
         style={globalStyles.button}
-        onClick={() => navigate('/')}
+        onClick={() => navigate('/login')}
         disabled={loading}
       >
         Back to Login

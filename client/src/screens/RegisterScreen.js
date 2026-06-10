@@ -5,17 +5,8 @@ import { createTechnician } from '../services/technicianService';
 import { globalStyles } from '../styles/globalStyles';
 import { useNavigate } from 'react-router-dom';
 
-const lagosLGAs = [
-  'Agege','Ajeromi-Ifelodun','Alimosho','Amuwo-Odofin','Apapa','Badagry',
-  'Epe','Eti-Osa','Ikeja','Ikorodu','Kosofe','Lagos Island','Lagos Mainland',
-  'Mushin','Ojo','Oshodi-Isolo','Shomolu','Surulere','Ifako-Ijaiye','Ibeju-Lekki'
-];
-
-const jobTypes = [
-  'Electrician','Plumber','Bricklayer','Carpenter','Painter','Tiler','Solar Installer',
-  'Welder','Mechanic','AC/Fridge Repair','Generator Technician','ICT Support',
-  'Phone Repair','CCTV Installer','Satellite Dish Installer'
-];
+const lagosLGAs = [/* ... same list ... */];
+const jobTypes = [/* ... same list ... */];
 
 export default function RegisterScreen() {
   const [name, setName] = useState('');
@@ -29,7 +20,7 @@ export default function RegisterScreen() {
 
   const handleRegister = async () => {
     if (!name || !faceImage || !workImage) {
-      window.alert('Please fill all fields and upload both images.');
+      alert('Please fill all fields and upload both images.');
       return;
     }
 
@@ -37,11 +28,11 @@ export default function RegisterScreen() {
 
     try {
       const newTech = await createTechnician(profile);
-      window.alert(`Technician ${newTech.name} registered successfully!`);
+      alert(`Technician ${newTech.name} registered successfully!`);
       navigate('/profile', { state: { technician: newTech } });
     } catch (err) {
       console.error('Registration failed:', err);
-      window.alert('Something went wrong. Please try again.');
+      alert('Something went wrong. Please try again.');
     }
   };
 

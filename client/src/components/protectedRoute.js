@@ -8,7 +8,7 @@ export default function ProtectedRoute({ children }) {
 
   if (!token) {
     // Not logged in → redirect to login
-    return <Navigate to="/" replace />;
+    return <Navigate to="/login" replace />;
   }
 
   // Logged in → render the protected content

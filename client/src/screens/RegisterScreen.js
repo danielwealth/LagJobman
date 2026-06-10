@@ -1,4 +1,3 @@
-// src/screens/RegisterScreen.js
 import React, { useState } from 'react';
 import AvailabilityToggle from '../components/AvailabilityToggle';
 import ImageUploader from '../components/ImageUploader';
@@ -20,8 +19,6 @@ const jobTypes = [
 
 export default function RegisterScreen() {
   const [name, setName] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [message, setMessage] = useState('');
   const [jobType, setJobType] = useState(jobTypes[0]);
   const [lga, setLga] = useState(lagosLGAs[0]);
   const [available, setAvailable] = useState(true);
@@ -30,20 +27,22 @@ export default function RegisterScreen() {
 
   const navigate = useNavigate();
 
-  const handleRegister = () => {
-    const profile = { 
-      name, 
-      phoneNumber, 
-      message, 
-      jobType, 
-      lga, 
-      available, 
-      faceImage, 
-      workImage 
-    };
-    const newTech = createTechnician(profile);
-    window.alert(`Technician ${newTech.name} registered successfully!`);
-    navigate('/profile', { state: { technician: newTech } });
+  const handleRegister = async () => {
+    if (!name || !faceImage || !workImage) {
+      window.alert('Please fill all fields and upload both images.');
+      return;
+    }
+
+    const profile = { name, jobType, lga, available, faceImage, workImage };
+
+    try {
+      const newTech = await createTechnician(profile);
+      window.alert(`Technician ${newTech.name} registered successfully!`);
+      navigate('/profile', { state: { technician: newTech } });
+    } catch (err) {
+      console.error('Registration failed:', err);
+      window.alert('Something went wrong. Please try again.');
+    }
   };
 
   return (
@@ -55,14 +54,6 @@ export default function RegisterScreen() {
         placeholder="Full Name"
         value={name}
         onChange={(e) => setName(e.target.value)}
-      />
-
-      <input
-        style={globalStyles.input}
-        type="tel"
-        placeholder="Phone Number"
-        value={phoneNumber}
-        onChange={(e) => setPhoneNumber(e.target.value)}
       />
 
       <label style={globalStyles.label}>Job Type</label>
@@ -91,13 +82,6 @@ export default function RegisterScreen() {
 
       <ImageUploader label="Face Photo" onImageSelected={setFaceImage} />
       <ImageUploader label="Work Sample" onImageSelected={setWorkImage} />
-
-      <textarea
-        style={{ ...globalStyles.input, height: '100px' }}
-        placeholder="Leave a message for clients"
-        value={message}
-        onChange={(e) => setMessage(e.target.value)}
-      />
 
       <button style={globalStyles.button} onClick={handleRegister}>
         Submit Registration

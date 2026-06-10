@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 const lagosLGAs = ['Agege','Ajeromi-Ifelodun','Alimosho','Amuwo-Odofin','Apapa','Badagry',
   'Epe','Eti-Osa','Ikeja','Ikorodu','Kosofe','Lagos Island','Lagos Mainland',
   'Mushin','Ojo','Oshodi-Isolo','Shomolu','Surulere','Ifako-Ijaiye','Ibeju-Lekki'];
+
 const jobTypes = ['Electrician','Plumber','Bricklayer','Carpenter','Painter','Tiler','Solar Installer',
   'Welder','Mechanic','AC/Fridge Repair','Generator Technician','ICT Support',
   'Phone Repair','CCTV Installer','Satellite Dish Installer'];
@@ -32,8 +33,14 @@ export default function RegisterScreen() {
 
     try {
       const newTech = await createTechnician(profile);
-      alert(`Technician ${newTech.name} registered successfully!`);
-      navigate('/profile', { state: { technician: newTech } });
+
+      if (newTech && newTech.name) {
+        alert(`Technician ${newTech.name} registered successfully!`);
+        // ✅ Redirect to technician profile page (no token needed)
+        navigate('/profile', { state: { technician: newTech } });
+      } else {
+        alert('Registration failed. Please try again.');
+      }
     } catch (err) {
       console.error('Registration failed:', err);
       alert('Something went wrong. Please try again.');

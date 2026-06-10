@@ -19,6 +19,8 @@ const jobTypes = [
 
 export default function RegisterScreen() {
   const [name, setName] = useState('');
+  const [telephone, setTelephone] = useState('');
+  const [description, setDescription] = useState('');
   const [jobType, setJobType] = useState(jobTypes[0]);
   const [lga, setLga] = useState(lagosLGAs[0]);
   const [available, setAvailable] = useState(true);
@@ -28,12 +30,12 @@ export default function RegisterScreen() {
   const navigate = useNavigate();
 
   const handleRegister = async () => {
-    if (!name || !faceImage || !workImage) {
+    if (!name || !telephone || !description || !faceImage || !workImage) {
       alert('Please fill all fields and upload both images.');
       return;
     }
 
-    const profile = { name, jobType, lga, available, faceImage, workImage };
+    const profile = { name, telephone, description, jobType, lga, available, faceImage, workImage };
 
     try {
       const result = await createTechnician(profile);
@@ -61,6 +63,14 @@ export default function RegisterScreen() {
         onChange={(e) => setName(e.target.value)}
       />
 
+      <input
+        style={globalStyles.input}
+        type="tel"
+        placeholder="Telephone"
+        value={telephone}
+        onChange={(e) => setTelephone(e.target.value)}
+      />
+
       <label style={globalStyles.label}>Job Type</label>
       <select
         style={globalStyles.input}
@@ -84,6 +94,13 @@ export default function RegisterScreen() {
       </select>
 
       <AvailabilityToggle available={available} setAvailable={setAvailable} />
+
+      <textarea
+        style={{ ...globalStyles.input, minHeight: '80px' }}
+        placeholder="Describe your skills and experience"
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
+      />
 
       <ImageUploader label="Face Photo" onImageSelected={setFaceImage} />
       <ImageUploader label="Work Sample" onImageSelected={setWorkImage} />

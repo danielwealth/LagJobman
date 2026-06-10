@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { registerUser } from '../services/authService';
+import React, { useState, useEffect } from 'react';
+import { registerUser, getAuthToken } from '../services/authService';
 import { globalStyles } from '../styles/globalStyles';
 import { useNavigate } from 'react-router-dom';
 
@@ -11,6 +11,13 @@ export default function SignUpScreen() {
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
+
+  // ✅ If already logged in, skip signup
+  useEffect(() => {
+    if (getAuthToken()) {
+      navigate('/home');
+    }
+  }, [navigate]);
 
   const handleSignUp = async () => {
     setError('');

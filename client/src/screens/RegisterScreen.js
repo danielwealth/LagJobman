@@ -29,23 +29,29 @@ export default function RegisterScreen() {
       return;
     }
 
-    const profile = { name, jobType, lga, available, faceImage, workImage };
+   const handleRegister = async () => {
+  if (!name || !faceImage || !workImage) {
+    alert('Please fill all fields and upload both images.');
+    return;
+  }
 
-    try {
-      const newTech = await createTechnician(profile);
+  const profile = { name, jobType, lga, available, faceImage, workImage };
 
-      if (newTech && newTech.name) {
-        alert(`Technician ${newTech.name} registered successfully!`);
-        // ✅ Redirect to technician profile page (no token needed)
-        navigate('/profile', { state: { technician: newTech } });
-      } else {
-        alert('Registration failed. Please try again.');
-      }
-    } catch (err) {
-      console.error('Registration failed:', err);
-      alert('Something went wrong. Please try again.');
+  try {
+    const result = await createTechnician(profile);
+
+    if (result.success) {
+      alert(result.message);
+      navigate('/profile', { state: { technician: result.technician } });
+    } else {
+      alert(result.message);
     }
-  };
+  } catch (err) {
+    console.error('Registration failed:', err);
+    alert('Something went wrong. Please try again.');
+  }
+};
+
 
   return (
     <div style={globalStyles.container}>

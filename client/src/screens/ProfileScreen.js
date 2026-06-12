@@ -18,6 +18,8 @@ export default function ProfileScreen() {
       <p><strong>Name:</strong> {technician.name}</p>
       <p><strong>Job Type:</strong> {technician.jobType}</p>
       <p><strong>LGA:</strong> {technician.lga}</p>
+      <p><strong>Phone:</strong> {technician.phoneNumber}</p>
+      <p><strong>Description:</strong> {technician.message}</p>
       <p><strong>Available:</strong> {technician.available ? 'Yes' : 'No'}</p>
 
       {technician.faceImage && (

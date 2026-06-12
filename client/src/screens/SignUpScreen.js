@@ -56,6 +56,8 @@ export default function SignUpScreen() {
 
   return (
     <div style={globalStyles.container}>
+    <h2 style={globalStyles.title}>Welcome to Lagosjobman</h2>
+
       <h2 style={globalStyles.title}>Create Your Account</h2>
 
       <input

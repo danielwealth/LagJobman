@@ -25,7 +25,7 @@ router.post('/', upload.single('file'), (req, res) => {
   }
   // Return full URL so frontend can use it
   const fileUrl = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
-  res.json({ url: fileUrl });
+  res.json({ url: `https://lagjobman.onrender.com/uploads/${req.file.filename}` });
 });
 
 export default router;

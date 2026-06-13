@@ -23,9 +23,12 @@ router.post('/', upload.single('file'), (req, res) => {
   if (!req.file) {
     return res.status(400).json({ message: 'No file uploaded' });
   }
-  // Return full URL so frontend can use it
+
+  // Build environment-aware URL
   const fileUrl = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
-  res.json({ url: `https://lagjobman.onrender.com/uploads/${req.file.filename}` });
+
+  res.json({ url: fileUrl });
 });
+
 
 export default router;
